@@ -1,0 +1,477 @@
+/* ==================================================
+   PIXEL QUEST - UNIVERSAL RESPONSIVE + SMART CONTROL
+   Dimuat SETELAH style.css. Tidak mengubah style.css.
+   ================================================== */
+
+:root {
+    --pq-top: 76px;
+    --pq-pad: 4%;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+}
+
+/* Input tetap bisa diketik di Safari/iOS */
+input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+#app {
+    height: 100vh;
+    height: 100dvh;
+}
+
+/* ---------- DASHBOARD (topbar fleksibel) ---------- */
+
+#dashboard {
+    display: flex;
+    flex-direction: column;
+}
+
+#dashboard .topbar {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: var(--pq-top);
+    flex-wrap: wrap;
+    row-gap: 4px;
+    padding-left: max(var(--pq-pad), env(safe-area-inset-left));
+    padding-right: max(var(--pq-pad), env(safe-area-inset-right));
+}
+
+#dashboard .dashboard-content {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+}
+
+/* ---------- GAME SCREEN ---------- */
+
+#gameScreen {
+    touch-action: none;
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+
+#gameScreen .game-wrapper {
+    flex: 0 0 auto;
+    max-height: none;
+}
+
+.game-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#ctrlGameBtn, #fsGameBtn {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* ---------- TOMBOL VIRTUAL ---------- */
+
+#gameScreen #touchControls {
+    --btn: clamp(56px, 17vmin, 88px);
+    position: absolute;
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    display: none;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 4;
+}
+
+body.pq-touch #gameScreen #touchControls {
+    display: flex;
+}
+
+body.pq-keys #gameScreen #touchControls {
+    display: none;
+}
+
+body.pq-tv #gameScreen #touchControls {
+    --btn: clamp(120px, 15vmin, 200px);
+}
+
+#gameScreen #touchControls .direction-controls {
+    display: flex;
+    gap: calc(var(--btn) * .25);
+}
+
+#gameScreen #touchControls button {
+    width: var(--btn);
+    height: var(--btn);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(var(--btn) * .04);
+    border-radius: 16px;
+    border: 3px solid #fff0c5;
+    background: linear-gradient(#5b8bc4, #2a4f82);
+    box-shadow: 0 5px 0 #14284a, 0 0 0 2px rgba(0, 0, 0, .35);
+    color: #fff;
+    font-size: calc(var(--btn) * .36);
+    line-height: 1;
+    opacity: .72;
+    pointer-events: auto;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    transition: transform .06s ease, box-shadow .06s ease, opacity .06s ease;
+}
+
+#gameScreen #touchControls button i,
+#gameScreen #touchControls button span {
+    pointer-events: none;
+}
+
+#gameScreen #touchControls button span {
+    font-size: calc(var(--btn) * .15);
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+#gameScreen #touchControls #jumpBtn {
+    width: calc(var(--btn) * 1.2);
+    height: calc(var(--btn) * 1.2);
+    border-radius: 20px;
+    background: linear-gradient(#f59a5a, #d2582a);
+    box-shadow: 0 5px 0 #7a2f12, 0 0 0 2px rgba(0, 0, 0, .35);
+}
+
+#gameScreen #touchControls button.pressed,
+#gameScreen #touchControls button:active {
+    background: linear-gradient(#ffe97a, #ffc72e);
+    color: #3a2a00;
+    opacity: 1;
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #8a6a00, 0 0 18px rgba(255, 220, 89, .75);
+}
+
+/* ---------- MODAL MODE KONTROL ---------- */
+
+#ctrlModal {
+    z-index: 150;
+}
+
+.ctrl-card {
+    width: min(400px, 92%);
+    max-height: 94%;
+    overflow: auto;
+}
+
+.ctrl-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #c5d4e3;
+}
+
+.modal-card .ctrl-opt {
+    background: #405a78;
+    border: 2px solid #8298ac;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.modal-card .ctrl-opt.active {
+    background: #e97940;
+    border-color: #ffcf91;
+}
+
+.ctrl-opt i {
+    margin-right: 8px;
+}
+
+.ctrl-opt small {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    opacity: .85;
+}
+
+/* ---------- NOTIFIKASI LANDSCAPE ---------- */
+
+#pqRotate {
+    position: absolute;
+    inset: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    background: radial-gradient(circle at 50% 30%, #2b4a74, #0b1422);
+}
+
+.rot-card {
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.rot-icon {
+    font-size: 76px;
+    color: #ffdc59;
+    animation: pqRot 2.2s infinite ease-in-out;
+}
+
+@keyframes pqRot {
+    0%, 15% { transform: rotate(0deg); }
+    55%, 100% { transform: rotate(-90deg); }
+}
+
+.rot-card h2 {
+    font-family: 'Press Start 2P', monospace;
+    color: #ffdc59;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.rot-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #dbe7f3;
+}
+
+.rot-card button {
+    width: 100%;
+    padding: 13px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 900;
+    color: #fff;
+    background: #e87940;
+    border: 2px solid #fff0c5;
+}
+
+.rot-card .rot-skip {
+    background: #405a78;
+    border-color: #8298ac;
+}
+
+/* ---------- LAYAR KECIL PORTRAIT ---------- */
+
+@media (max-width: 700px) {
+    :root {
+        --pq-top: 65px;
+        --pq-pad: 9px;
+    }
+
+    #logoutBtn { font-size: 0; }
+    #logoutBtn i { font-size: 14px; }
+}
+
+/* ==================================================
+   HP / TABLET LANDSCAPE (tinggi layar pendek)
+   ================================================== */
+
+@media (orientation: landscape) and (max-height: 540px) {
+    :root {
+        --pq-top: 46px;
+        --pq-pad: 8px;
+    }
+
+    #dashboard .topbar {
+        flex-wrap: nowrap;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        gap: 6px;
+    }
+
+    #dashboard .avatar { width: 32px; height: 32px; font-size: 16px; border-width: 2px; }
+    #dashboard .profile { gap: 6px; min-width: 0; }
+    #dashboard .profile small { display: none; }
+    #dashboard .profile h3 { font-size: 11px; max-width: 22vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #dashboard .profile span { font-size: 7px; }
+    #dashboard .edit-btn { padding: 5px 7px; font-size: 8px; }
+    #dashboard .top-stats { gap: 5px; }
+    #dashboard .stat small { font-size: 7px; }
+    #dashboard .stat b { font-size: 10px; }
+    #dashboard .sound-btn { width: 28px; height: 28px; font-size: 14px; }
+    #logoutBtn { font-size: 0; }
+    #logoutBtn i { font-size: 13px; }
+
+    /* Dashboard 2 kolom: logo + karakter di kiri, menu di kanan */
+    #dashboard .dashboard-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        align-items: center;
+        justify-items: center;
+        column-gap: 4%;
+        padding: 6px 4% 24px;
+    }
+
+    #dashboard .logo { grid-column: 1; grid-row: 1; }
+    #dashboard .logo small { font-size: 8px; letter-spacing: 3px; }
+    #dashboard .logo h1 { font-size: clamp(14px, 4vw, 26px); line-height: 1.5; }
+    #dashboard .logo p { font-size: 8px; letter-spacing: 3px; }
+    #dashboard #pqLogo { max-height: 56px; margin: 2px auto; }
+
+    #dashboard .hero { grid-column: 1; grid-row: 2; width: auto; height: auto; margin-top: 0; }
+    #dashboard #heroCanvas { height: clamp(60px, 26vh, 100px); width: auto; aspect-ratio: 72 / 100; }
+
+    #dashboard .main-actions { grid-column: 2; grid-row: 1 / span 2; gap: 7px; width: min(290px, 100%); }
+    #dashboard .play-btn { padding: 10px; font-size: 13px; }
+    #dashboard .continue-btn,
+    #dashboard .shop-open-btn { padding: 8px; font-size: 10px; }
+    #dashboard .dashboard-footer { bottom: 5px; font-size: 7px; }
+
+    /* Pilih World / Level */
+    #levelScreen { padding: 8px 3%; }
+    #levelScreen .level-header { margin: 0 auto 8px; }
+    #levelScreen .level-title h2 { font-size: 12px; margin-bottom: 3px; }
+    #levelScreen .level-title p,
+    #levelScreen .level-progress small { font-size: 9px; }
+    #levelScreen .back-btn { padding: 6px 10px; font-size: 10px; }
+    #levelScreen .level-footer { padding: 6px; font-size: 8px; }
+
+    #levelGrid.worlds { grid-template-columns: repeat(5, 1fr); gap: 8px; max-width: 100%; }
+    #levelGrid.stages { grid-template-columns: repeat(5, 1fr); gap: 7px; max-width: 100%; }
+    #levelGrid.stages .level-card { min-height: 78px; gap: 2px; }
+    #levelGrid .level-number { font-size: 18px; }
+    #levelGrid .winfo { padding: 6px; gap: 3px; }
+    #levelGrid .winfo h4 { font-size: 10px; }
+    #levelGrid .winfo small { font-size: 7px; }
+    #levelGrid .wrow { font-size: 9px; }
+    #levelGrid .wlockov { font-size: 20px; }
+    #levelGrid .wlockov small { font-size: 8px; }
+
+    /* Shop / Vault: tetap 2 kolom */
+    #shopScreen { padding: 8px 10px; }
+    #shopScreen .shop-header { margin-bottom: 8px; }
+    #shopScreen .shop-header h2 { font-size: 11px; margin-bottom: 3px; }
+    #shopScreen .shop-header p { font-size: 9px; }
+    #shopScreen .shop-balance { padding: 6px 10px; font-size: 11px; }
+    #shopScreen .shop-content { grid-template-columns: 170px 1fr; gap: 10px; }
+    #shopScreen .character-preview { position: sticky; top: 4px; padding: 8px 6px; gap: 6px; }
+    #shopScreen #previewCanvas { width: min(120px, 100%); height: auto; aspect-ratio: 160 / 220; }
+    #shopScreen .custom-section { padding: 10px; }
+    #shopScreen .shop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    #shopScreen .item-thumb { height: 76px; }
+    #shopScreen .item-thumb canvas { width: 54px; height: 76px; }
+
+    /* Game */
+    #gameScreen { padding-top: 4px; padding-bottom: max(4px, env(safe-area-inset-bottom)); }
+    #gameScreen .game-topbar { margin-bottom: 4px; gap: 6px; }
+    #gameScreen .game-button { padding: 5px 9px; font-size: 10px; }
+    #gameScreen .game-info { gap: 10px; font-size: 10px; }
+    #gameScreen .game-message { gap: 6px; overflow: auto; }
+    #gameScreen .game-message p { font-size: 11px; max-width: 90%; }
+    #gameScreen .game-message button { width: 140px; padding: 7px; font-size: 11px; }
+
+    /* Login, profil, peti */
+    body .pq-card { padding: 12px; gap: 6px; }
+    body .pq-card h1 { font-size: 14px; }
+    body .pq-card input { padding: 8px; }
+    body .pq-b { padding: 8px; }
+    #pqAuth img { max-height: 54px; }
+    .pq2-g svg { width: 28px; height: 28px; }
+    .pq2-g { padding: 6px 4px; }
+    .modal-card { padding: 14px; gap: 8px; }
+
+    .rot-icon { font-size: 48px; }
+}
+
+/* ==================================================
+   LAYAR BESAR / TV PRESENTASI / IFP
+   ================================================== */
+
+@media (min-width: 1600px) {
+    :root { --pq-top: 104px; }
+
+    #dashboard .avatar { width: 64px; height: 64px; font-size: 34px; }
+    #dashboard .profile { gap: 14px; }
+    #dashboard .profile small,
+    #dashboard .stat small { font-size: 13px; }
+    #dashboard .profile h3 { font-size: 22px; }
+    #dashboard .profile span { font-size: 12px; }
+    #dashboard .stat b { font-size: 22px; }
+    #dashboard .edit-btn { padding: 10px 16px; font-size: 14px; }
+    #dashboard .sound-btn { width: 54px; height: 54px; font-size: 26px; }
+    #dashboard .top-stats { gap: 18px; }
+
+    #dashboard .logo small { font-size: 15px; }
+    #dashboard .logo p { font-size: 15px; }
+    #dashboard .logo h1 { font-size: clamp(34px, 3.2vw, 64px); }
+    #dashboard #pqLogo { max-width: min(520px, 80%); max-height: 150px; }
+    #dashboard .hero { width: 120px; height: 170px; }
+    #dashboard #heroCanvas { width: 108px; height: 150px; }
+    #dashboard .main-actions { width: min(460px, 90%); gap: 16px; }
+    #dashboard .play-btn { padding: 22px; font-size: 24px; }
+    #dashboard .continue-btn,
+    #dashboard .shop-open-btn { padding: 16px; font-size: 17px; }
+    #dashboard .dashboard-footer { font-size: 15px; bottom: 20px; }
+
+    #levelScreen .level-header { max-width: 1400px; }
+    #levelScreen .level-title h2 { font-size: 30px; }
+    #levelScreen .level-title p,
+    #levelScreen .level-progress small { font-size: 16px; }
+    #levelScreen .back-btn { padding: 14px 20px; font-size: 16px; }
+    #levelScreen .level-progress b { font-size: 20px; }
+    #levelGrid.worlds,
+    #levelGrid.stages { max-width: 1400px; gap: 20px; }
+    #levelGrid .level-card { min-height: 140px; }
+    #levelGrid.stages .level-card { min-height: 150px; }
+    #levelGrid .level-number { font-size: 38px; }
+    #levelGrid .level-card small { font-size: 12px; }
+    #levelGrid .level-stars { font-size: 18px; }
+    #levelGrid .level-card .sname { font-size: 12px; }
+    #levelGrid .winfo h4 { font-size: 17px; }
+    #levelGrid .winfo small { font-size: 11px; }
+    #levelGrid .wrow { font-size: 14px; }
+    #levelScreen .level-footer { font-size: 14px; }
+
+    #shopScreen .shop-header,
+    #shopScreen .shop-content { max-width: 1500px; }
+    #shopScreen .shop-header h2 { font-size: 26px; }
+    #shopScreen .shop-header p { font-size: 15px; }
+    #shopScreen .shop-balance { font-size: 20px; padding: 14px 20px; }
+    #shopScreen .shop-content { grid-template-columns: 320px 1fr; gap: 30px; }
+    #shopScreen #previewCanvas { width: 240px; height: 330px; }
+    #shopScreen .custom-section h3 { font-size: 20px; }
+    #shopScreen .custom-section p { font-size: 14px; }
+    #shopScreen .shop-tab { padding: 12px 20px; font-size: 15px; }
+    #shopScreen .shop-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    #shopScreen .shop-item h4 { font-size: 15px; }
+    #shopScreen .shop-item p { font-size: 14px; }
+    #shopScreen .shop-item button { padding: 12px 6px; font-size: 14px; }
+    #shopScreen .color-choice { width: 44px; height: 44px; }
+    #shopScreen .item-thumb { height: 110px; }
+    #shopScreen .item-thumb canvas { width: 78px; height: 110px; }
+
+    #gameScreen .game-button { padding: 13px 20px; font-size: 16px; }
+    #gameScreen .game-info { gap: 30px; font-size: 18px; }
+    #gameScreen .game-message h2 { font-size: 34px; }
+    #gameScreen .game-message p { font-size: 18px; }
+    #gameScreen .game-message button { width: 240px; padding: 15px; font-size: 17px; }
+
+    .toast { font-size: 18px; padding: 16px 26px; }
+    .modal-card { width: min(520px, 90%); }
+    .modal-card h2 { font-size: 24px; }
+    .modal-card button,
+    .modal-card input { font-size: 17px; }
+    .ctrl-card p { font-size: 16px; }
+    .ctrl-opt small { font-size: 13px; }
+}

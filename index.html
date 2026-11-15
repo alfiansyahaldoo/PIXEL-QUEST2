@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#111c2c">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>PIXEL QUEST</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+<div id="app">
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="screen">
+        <header class="topbar">
+            <div class="profile">
+                <div class="avatar" id="avatar">P</div>
+                <div>
+                    <small>PLAYER</small>
+                    <h3 id="playerName">Player One</h3>
+                    <span id="playerRank">BEGINNER ADVENTURER</span>
+                </div>
+                <button class="edit-btn" id="editName">EDIT</button>
+            </div>
+
+            <div class="top-stats">
+                <div class="stat">
+                    <small>LEVEL</small>
+                    <b id="highestLevel">01 / 15</b>
+                </div>
+                <div class="stat">
+                    <small>COINS</small>
+                    <b><i class="fa-solid fa-coins"></i> <span id="totalCoins">0</span></b>
+                </div>
+                <button class="sound-btn" id="musicBtn" title="Music"><i class="fa-solid fa-music"></i></button>
+                <button class="sound-btn" id="soundBtn" title="Sound"><i class="fa-solid fa-volume-high"></i></button>
+                <button class="sound-btn" id="ctrlBtn" title="Mode Kontrol"><i class="fa-solid fa-gamepad"></i></button>
+                <button class="sound-btn" id="fsBtn" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+                <button class="edit-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> LOGOUT</button>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            <div class="logo">
+                <small>WELCOME TO</small>
+                <img id="pqLogo" src="logo.png" alt="PIXEL QUEST"
+                     onload="this.style.display='block';document.getElementById('logoH1').style.display='none';">
+                <h1 id="logoH1">PIXEL QUEST</h1>
+                <p>JUMP • RUN • EXPLORE</p>
+            </div>
+
+            <div class="hero">
+                <canvas id="heroCanvas" width="72" height="100"></canvas>
+            </div>
+
+            <div class="main-actions">
+                <button class="play-btn" id="playBtn"><i class="fa-solid fa-play"></i> PLAY GAME</button>
+                <button class="continue-btn" id="continueBtn">CONTINUE GAME</button>
+                <button class="shop-open-btn" id="openShop"><i class="fa-solid fa-bag-shopping"></i> CHARACTER SHOP</button>
+                <button class="shop-open-btn" id="openVault" style="background:#2f7f9e;border-color:#a9e3f5"><i class="fa-solid fa-vault"></i> VAULT</button>
+            </div>
+
+            <div class="dashboard-footer">
+                <span>By AldooSKY26</span>
+                <span>15 WORLDS • 3 LIVES</span>
+            </div>
+        </main>
+    </section>
+
+    <!-- LEVEL SELECT -->
+    <section id="levelScreen" class="screen hidden">
+        <div class="level-header">
+            <button class="back-btn" id="backDashboard"><i class="fa-solid fa-arrow-left"></i> BACK</button>
+
+            <div class="level-title">
+                <h2>SELECT WORLD</h2>
+                <p>Choose your adventure</p>
+            </div>
+
+            <div class="level-progress">
+                <small>UNLOCKED</small>
+                <b id="unlockedCount">1 / 15</b>
+            </div>
+        </div>
+
+        <div class="level-grid" id="levelGrid"></div>
+
+        <div class="level-footer">
+            Complete a world to unlock the next one. Dapatkan ★★★ dengan ambil banyak koin &amp; tanpa mati!
+        </div>
+    </section>
+
+    <!-- SHOP -->
+    <section id="shopScreen" class="screen hidden">
+        <header class="shop-header">
+            <button class="back-btn" id="shopBack"><i class="fa-solid fa-arrow-left"></i> BACK</button>
+            <div>
+                <h2>CHARACTER SHOP</h2>
+                <p>Klik item untuk COBA dulu, baru beli</p>
+            </div>
+            <div class="shop-balance"><i class="fa-solid fa-coins"></i> <span id="shopCoins">0</span></div>
+        </header>
+
+        <div class="shop-content">
+            <div class="character-preview">
+                <canvas id="previewCanvas" width="160" height="220"></canvas>
+                <p id="tryStatus">SEDANG DIPAKAI</p>
+
+                <div class="preview-tools">
+                    <button class="mini-btn" id="rotateBtn"><i class="fa-solid fa-rotate-left"></i> PUTAR</button>
+                    <button class="mini-btn" id="walkBtn"><i class="fa-solid fa-person-walking"></i> JALAN</button>
+                </div>
+
+                <button class="mini-btn wide hidden" id="resetTryBtn">BATALKAN COBA</button>
+                <button class="wear-btn hidden" id="wearAllBtn">PAKAI SEMUA</button>
+            </div>
+
+            <div class="custom-section">
+                <h3>FREE SKIN COLOR</h3>
+                <p>Ganti warna kulit karaktermu, gratis.</p>
+                <div class="color-list" id="colorList"></div>
+
+                <h3 class="sub-title">FREE HAIR COLOR</h3>
+                <div class="color-list" id="hairList"></div>
+
+                <div class="shop-divider"></div>
+
+                <h3>ITEM COLLECTION</h3>
+                <p>Klik item untuk mencoba. Tombol BELI / EQUIP untuk memakai permanen.</p>
+                <div class="shop-tabs">
+                    <button class="shop-tab active" data-category="shirt">Baju</button>
+                    <button class="shop-tab" data-category="pants">Celana</button>
+                    <button class="shop-tab" data-category="hat">Topi</button>
+                    <button class="shop-tab" data-category="mask">Topeng</button>
+                    <button class="shop-tab" data-category="shoes">Sepatu</button>
+                    <button class="shop-tab" data-category="cape">Jubah</button>
+                    <button class="shop-tab" data-category="acc">Aksesori</button>
+                </div>
+
+                <div class="shop-grid" id="shopGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="gameScreen" class="screen hidden">
+        <div class="game-topbar">
+            <button class="game-button" id="exitGame"><i class="fa-solid fa-arrow-left"></i> MENU</button>
+            <div class="game-info">
+                <span id="gameLevel">WORLD 1-1</span>
+                <span id="gameScore">COINS: 0</span>
+                <span id="gameLives">♥ ♥ ♥</span>
+            </div>
+            <div class="game-actions">
+                <button class="game-button" id="ctrlGameBtn" title="Mode Kontrol"><i class="fa-solid fa-gamepad"></i></button>
+                <button class="game-button" id="fsGameBtn" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
+                <button class="game-button" id="pauseBtn"><i class="fa-solid fa-pause"></i> PAUSE</button>
+            </div>
+        </div>
+
+        <div class="game-wrapper">
+            <canvas id="gameCanvas" width="480" height="270"></canvas>
+
+            <div class="game-message hidden" id="gameMessage">
+                <h2 id="messageTitle">PAUSED</h2>
+                <p id="messageText">Game sedang dijeda.</p>
+                <button id="resumeBtn">RESUME</button>
+                <button id="restartBtn">RESTART</button>
+                <button id="messageMenuBtn">DASHBOARD</button>
+            </div>
+        </div>
+
+        <!-- Tombol virtual: kiri-bawah = KIRI/KANAN, kanan-bawah = JUMP -->
+        <div id="touchControls">
+            <div class="direction-controls">
+                <button id="leftBtn" aria-label="Kiri"><i class="fa-solid fa-arrow-left"></i><span>KIRI</span></button>
+                <button id="rightBtn" aria-label="Kanan"><i class="fa-solid fa-arrow-right"></i><span>KANAN</span></button>
+            </div>
+            <button id="jumpBtn" aria-label="Lompat"><i class="fa-solid fa-arrow-up"></i><span>JUMP</span></button>
+        </div>
+    </section>
+
+    <!-- NAME MODAL -->
+    <div class="modal hidden" id="nameModal">
+        <div class="modal-card">
+            <h2>CHANGE PLAYER NAME</h2>
+            <input type="text" id="nameInput" maxlength="16" placeholder="Enter your name">
+            <button id="saveName">SAVE NAME</button>
+            <button class="cancel-btn" id="cancelName">CANCEL</button>
+        </div>
+    </div>
+
+    <!-- MODE KONTROL -->
+    <div class="modal hidden" id="ctrlModal">
+        <div class="modal-card ctrl-card">
+            <h2>MODE KONTROL</h2>
+            <p id="ctrlInfo"></p>
+            <button class="ctrl-opt" data-mode="auto"><i class="fa-solid fa-wand-magic-sparkles"></i> AUTO<small>Otomatis sesuai perangkat</small></button>
+            <button class="ctrl-opt" data-mode="keyboard"><i class="fa-solid fa-keyboard"></i> KEYBOARD MODE<small>A/D atau panah, Space/W lompat</small></button>
+            <button class="ctrl-opt" data-mode="touch"><i class="fa-solid fa-hand-pointer"></i> TOUCH MODE<small>Tombol virtual </small></button>
+            <button class="cancel-btn" id="ctrlClose">TUTUP</button>
+        </div>
+    </div>
+
+    <!-- NOTIFIKASI PUTAR LANDSCAPE (HP/Tablet portrait) -->
+    <div id="pqRotate" class="hidden" role="alert">
+        <div class="rot-card">
+            <i class="fa-solid fa-mobile-screen-button rot-icon"></i>
+            <h2>PUTAR LAYAR KAMU</h2>
+            <p>PIXEL QUEST paling nyaman dimainkan dalam posisi Landscape (Horizontal). Progres kamu aman dan tidak berubah.</p>
+            <button id="rotLock"><i class="fa-solid fa-expand"></i> KUNCI LANDSCAPE</button>
+            <button class="rot-skip" id="rotSkip">LANJUT PORTRAIT</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+</div>
+
+<script src="game.js"></script>
+<script src="upgrade.js"></script>
+<script src="upgrade2.js"></script>
+<script src="upgrade3.js"></script>
+<script src="upgrade4.js"></script>
+<script src="responsive.js"></script>
+</body>
+</html>
